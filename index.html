@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #haslo {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media screen and (max-width: 767px) {
+            button {
+                font-size: 24px;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+    <title>Losowe Hasło</title>
+</head>
+<body>
+    <div>
+        <button id="przycisk" onclick="wyswietlLosoweHaslo()">Wylosuj hasło</button>
+        <div id="haslo"></div>
+    </div>
+
+    <script>
+        const listaHasel = [
+            "ROBOT SPRZĄTAJĄCY",
+            "KRYPTOWALUTY",
+            "FILMIK NA TIKTOKU",
+            "ZAJĘCIA ZDALNE PRZEZ MS TEAMS",
+            "GŁOSOWANIE W WYBORACH PRZEZ INTERNET",
+            "LAJKI W SIECI SPOŁECZNOŚCIOWEJ",
+            "LOKALIZATOR TELEFONU (NP. AIRTAG)",
+            "POJAZD AUTONOMICZNY",
+            "ŁAZIK MARSJAŃSKI",
+            "PUCHAR ŚWIATA W PIŁCE NOŻNEJ"
+        ];
+
+        function wyswietlLosoweHaslo() {
+            const losowyIndex = Math.floor(Math.random() * listaHasel.length);
+            const wybraneHaslo = listaHasel[losowyIndex];
+            document.getElementById("haslo").innerHTML = wybraneHaslo;
+
+            // Ukrywanie przycisku po naciśnięciu
+            document.getElementById("przycisk").style.display = "none";
+        }
+    </script>
+</body>
+</html>
