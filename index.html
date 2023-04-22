@@ -4,40 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        button {
-            font-size: 18px;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        #haslo {
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+    }
+
+    .tab-container {
+        display: flex;
+        justify-content: center;
+        background-color: #f1f1f1;
+    }
+
+    .tab {
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .tab:hover,
+    .tab:focus {
+        background-color: #fbbc04;
+        border-bottom: 2px solid #fbbc04;
+        color: #000;
+    }
+
+    .tab-content {
+        display: none;
+        padding: 6px 12px;
+        border-top: none;
+    }
+
+    #zasady,
+    #zdjecia,
+    #hasla {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #zasady button,
+    #zdjecia button,
+    #hasla button {
+        font-size: 18px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #fbbc04;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    #zasady button:hover,
+    #zdjecia button:hover,
+    #hasla button:hover {
+        background-color: #e0ab02;
+    }
+
+    #zasady p,
+    #zdjecia img,
+    #hasla div {
+        margin-top: 20px;
+    }
+
+    #opis-zasad {
+        max-width: 800px;
+        text-align: justify;
+    }
+
+    #zdjecie {
+        width: 100%;
+        max-width: 800px;
+    }
+
+    @media screen and (max-width: 767px) {
+        #zasady button,
+        #zdjecia button,
+        #hasla button {
             font-size: 24px;
-            text-align: center;
-            margin-top: 20px;
+            padding: 15px 30px;
         }
-        @media screen and (max-width: 767px) {
-            button {
-                font-size: 24px;
-                padding: 15px 30px;
-            }
-        }
+    }
+
+
+
     </style>
-    <title>Losowe Hasło</title>
+    <title>1723</title>
 </head>
 <body>
-    <div>
-        <button id="przycisk" onclick="wyswietlLosoweHaslo()">Wylosuj hasło</button>
+    <div class="tab-container">
+        <button class="tab" onclick="openTab(event, 'zasady')">Zasady</button>
+        <button class="tab" onclick="openTab(event, 'zdjecia')">Zdjęcia</button>
+        <button class="tab" onclick="openTab(event, 'hasla')">Hasła</button>
+    </div>
+    <div id="zasady" class="tab-content">
+        <button id="pokaz-zasady" onclick="pokazZasady()">Pokaż zasady</button>
+        <p id="opis-zasad" style="display: none;">Studenci dobierają się w pary. W każdej parze jedna z osób „przeniosła się w czasie” do 1713 roku i nie ma pojęcia o dzisiejszym świecie.
+          Druga osoba wybiera produkt/usługę/ koncepcję, która nie istniała w XVIII wieku (np. ubezpieczenie smartfonu, bezprzewodowe słuchawki, kryptowaluta, drukarka 3D) i próbuje wyjaśnić swojemu towarzyszowi z przeszłości,
+          jak działa to rozwiązanie i do czego jest wykorzystywane. Ta rozgrzewka pozwala studentom skupić się na podstawowych funkcjonalnościach produktu, co przygotowuje ich do procesu prototypowania swoich własnych rozwiązań.</p>
+    </div>
+    <div id="zdjecia" class="tab-content">
+        <button id="pokaz-zdjecie" onclick="pokazZdjecie()">Pokaż zdjęcie</button>
+        <img id="zdjecie" src="" alt="Zdjęcie" style="display: none;">
+    </div>
+
+
+
+    <div id="hasla" class="tab-content">
+        <button id="losuj-haslo" onclick="wyswietlLosoweHaslo()">Wylosuj hasło</button>
         <div id="haslo"></div>
     </div>
 
     <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabButtons;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            tabButtons = document.getElementsByClassName("tab");
+            for             (i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].style.backgroundColor = "#ccc";
+            }
+            document.getElementById(tabName).style.display = "flex";
+            evt.currentTarget.style.backgroundColor = "#ddd";
+        }
+
         const listaHasel = [
             "ROBOT SPRZĄTAJĄCY",
             "KRYPTOWALUTY",
@@ -51,14 +151,48 @@
             "PUCHAR ŚWIATA W PIŁCE NOŻNEJ"
         ];
 
+        const listaZdjec = [
+            "img1.png",
+            "img2.png",
+            "img3.png",
+            "img4.png",
+            "img5.png",
+            "img6.png",
+            "img7.png",
+            "img8.png",
+            "img9.png",
+            "img10.png",
+        ];
+        let indeksyZdjec = [...Array(listaZdjec.length).keys()];
+
         function wyswietlLosoweHaslo() {
             const losowyIndex = Math.floor(Math.random() * listaHasel.length);
             const wybraneHaslo = listaHasel[losowyIndex];
             document.getElementById("haslo").innerHTML = wybraneHaslo;
-
-            // Ukrywanie przycisku po naciśnięciu
-            document.getElementById("przycisk").style.display = "none";
+            document.getElementById("losuj-haslo").style.display = "none";
         }
+
+
+        function pokazZasady() {
+            document.getElementById("opis-zasad").style.display = "block";
+            document.getElementById("pokaz-zasady").style.display = "none";
+        }
+
+        function pokazZdjecie() {
+            if (indeksyZdjec.length === 0) {
+                alert("Wszystkie zdjęcia zostały już wyświetlone!");
+                return;
+            }
+            const losowyIndex = Math.floor(Math.random() * indeksyZdjec.length);
+            const wybraneZdjecie = listaZdjec[indeksyZdjec[losowyIndex]];
+            document.getElementById("zdjecie").src = wybraneZdjecie;
+            document.getElementById("zdjecie").style.display = "block";
+
+            indeksyZdjec.splice(losowyIndex, 1);
+        }
+
+        // Otwarcie domyślnej zakładki (Zasady)
+        document.getElementsByClassName("tab")[0].click();
     </script>
 </body>
 </html>
